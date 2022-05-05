@@ -9,9 +9,10 @@ const AppDataSource = new DataSource({
     database: 'nftmarket_db',
     synchronize: true,
     entities: [
-        require("../entities/User"),
-        require("../entities/Item"),
+        require("../entities/User"),        
         require("../entities/Currency"),
+        require("../entities/Item"),
+        require("../entities/Transaction"),
     ]
 });
 

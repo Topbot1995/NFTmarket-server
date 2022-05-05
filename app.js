@@ -7,7 +7,8 @@ const logger = require('morgan');
 
 const usersRouter = require('./routes/users');
 const itemsRouter = require('./routes/items');
-const uploadRouter = require('./routes/upload');
+// const activitiesRouter = require('./routes/activities');
+const transactionsRouter = require('./routes/transactions');
 const validateRouter = require('./routes/validate');
 
 const authenticateUser = require('./middleware/authenticate');
@@ -33,6 +34,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/users', usersRouter);
 app.use('/items', itemsRouter);
+// app.use('/activities', activitiesRouter);
+app.use('/transactions', transactionsRouter);
 
 app.use('/', authenticateUser);
 

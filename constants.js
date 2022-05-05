@@ -4,5 +4,6 @@ const RES_ERROR_LOGIN = "res_error_login";
 const RES_ERROR_LOGOUT = "res_error_logout";
 const RES_ERROR_GETUSER = "res_error_getuser";
 const RES_WRONG_PASSWORD = "res_error_wrongpassword";
+const RES_ERROR_DATABASE = "res_error_database";
 
-module.exports = {RES_SUCCESS_CODE, RES_ERROR_REGISTER, RES_ERROR_LOGIN, RES_ERROR_GETUSER, RES_WRONG_PASSWORD, RES_ERROR_LOGOUT};
+module.exports = {RES_SUCCESS_CODE, RES_ERROR_REGISTER, RES_ERROR_LOGIN, RES_ERROR_GETUSER, RES_WRONG_PASSWORD, RES_ERROR_LOGOUT, RES_ERROR_DATABASE};

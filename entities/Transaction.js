@@ -1,3 +1,5 @@
+const User = require("./User");
+const Item = require("./Item");
 var EntitySchema = require("typeorm").EntitySchema;
 
 module.exports = new EntitySchema({
@@ -8,42 +10,31 @@ module.exports = new EntitySchema({
             primary: true,
             type: "int",
             generated: true
-        },        
-        item_id: {
-            type: "int",
-            nullable:false
         },
-        seller_id: {
-            type: "int",
-            nullable:false
-        },
-        buyer_id: {
-            type: "int",
-            nullable:false
-        },        
         sold_price: {
             type: "float",
-            nullable:false
-        },                
+            nullable: false
+        },
         created_at: {
-            type: "datetime",            
+            type: "datetime",
         },
-        relations: {
-            creator: {
-                type: 'many-to-one',
-                target: 'User',
-                joinColumn: true,
-            },
-            currency: {
-                type: 'many-to-one',
-                target: 'Currency',
-                joinColumn: true,
-            },
-            owner: {
-                type: 'many-to-one',
-                target: 'User',
-                joinColumn: true,
-            },
+    },
+    relations: {
+        item: {
+            type: 'many-to-one',
+            target: 'Item',
+            joinColumn: true,
         },
-    }
+        seller: {
+            type: 'many-to-one',
+            target: 'User',
+            joinColumn: true,
+        },
+        buyer: {
+            type: 'many-to-one',
+            target: 'User',
+            joinColumn: true,
+        },
+    },
+
 });
