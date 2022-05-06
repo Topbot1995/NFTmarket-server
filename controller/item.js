@@ -1,7 +1,7 @@
 const AppDataSource = require("../database/config");
 const User = require("../entities/User");
 const Item = require("../entities/Item");
-const { RES_SUCCESS_CODE, RES_ERROR_REGISTER, RES_WRONG_PASSWORD, RES_ERROR_LOGIN, RES_ERROR_LOGOUT } = require('../constants');
+const { RES_SUCCESS_CODE, RES_ERROR_DATABASE } = require('../constants');
 const { now } = require('lodash');
 const moment = require('moment');
 require('dotenv').config();
@@ -23,7 +23,7 @@ const getItem = async (req, res, next) => {
             return false;
         })
         .catch((error) => {
-            return res.status(404).json({ code: RES_ERROR_LOGIN, msg: "User Cannot be Found!" });
+            return res.status(404).json({ code: RES_ERROR_DATABASE, msg: "User Cannot be Found!" });
         });;
     console.log(users);
 }
@@ -41,7 +41,7 @@ const getAllItem = async (req, res, next) => {
             return false;
         })
         .catch((error) => {
-            return res.status(404).json({ code: RES_ERROR_LOGIN, msg: "User Cannot be Found!" });
+            return res.status(404).json({ code: RES_ERROR_DATABASE, msg: "User Cannot be Found!" });
         });;
     console.log(users);
 }
@@ -59,7 +59,7 @@ const getUserItem = async (req, res, next) => {
             return false;
         })
         .catch((error) => {
-            return res.status(404).json({ code: RES_ERROR_LOGIN, msg: "User Cannot be Found!" });
+            return res.status(404).json({ code: RES_ERROR_DATABASE, msg: "User Cannot be Found!" });
         });;
     console.log(users);
 }
@@ -94,7 +94,7 @@ const createItem = async (req, res, next) => {
         })
         .catch(error => {
             console.log(error)
-            res.status(400).json({ code: RES_ERROR_REGISTER, error })
+            res.status(400).json({ code: RES_ERROR_DATABASE, error })
         })
     console.log(item);
 
@@ -113,7 +113,7 @@ const updateItem = async (req, res, next) => {
         })
         .catch(error => {
             console.log(error)
-            res.status(400).json({ code: RES_ERROR_REGISTER, error })
+            res.status(400).json({ code: RES_ERROR_DATABASE, error })
         })
 }
 
@@ -130,7 +130,7 @@ const deleteItem = async (req, res, next) => {
         })
         .catch(error => {
             console.log(error)
-            res.status(400).json({ code: RES_ERROR_REGISTER, error })
+            res.status(400).json({ code: RES_ERROR_DATABASE, error })
         })
 }
 

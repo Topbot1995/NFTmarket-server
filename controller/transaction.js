@@ -2,7 +2,7 @@ const AppDataSource = require("../database/config");
 const Transaction = require("../entities/Transaction");
 const User = require("../entities/User");
 const Item = require("../entities/Item");
-const { RES_SUCCESS_CODE, RES_ERROR_REGISTER, RES_WRONG_PASSWORD, RES_ERROR_LOGIN, RES_ERROR_LOGOUT, RES_ERROR_DATABASE } = require('../constants');
+const { RES_SUCCESS_CODE, RES_ERROR_DATABASE } = require('../constants');
 const moment = require('moment');
 require('dotenv').config();
 

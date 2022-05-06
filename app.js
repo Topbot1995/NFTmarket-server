@@ -5,13 +5,12 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
+const authenticateUser = require('./middleware/authenticate');
+
 const usersRouter = require('./routes/users');
 const itemsRouter = require('./routes/items');
-// const activitiesRouter = require('./routes/activities');
 const transactionsRouter = require('./routes/transactions');
-const validateRouter = require('./routes/validate');
-
-const authenticateUser = require('./middleware/authenticate');
+const currenciesRouter = require('./routes/currencies');
 
 const createConnection = require('./database/createConnection');
 
@@ -34,12 +33,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/users', usersRouter);
 app.use('/items', itemsRouter);
-// app.use('/activities', activitiesRouter);
+app.use('/currencies', currenciesRouter);
 app.use('/transactions', transactionsRouter);
 
 app.use('/', authenticateUser);
-
-app.use('/validate', validateRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
