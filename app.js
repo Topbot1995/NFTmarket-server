@@ -8,11 +8,13 @@ const logger = require('morgan');
 const authenticateUser = require('./middleware/authenticate');
 
 const usersRouter = require('./routes/users');
+const authenticatedUsersRouter = require('./routes/authenticatedUsers');
 const itemsRouter = require('./routes/items');
 const transactionsRouter = require('./routes/transactions');
 const currenciesRouter = require('./routes/currencies');
 
 const createConnection = require('./database/createConnection');
+const fileUpload = require('express-fileupload');
 
 const app = express();
 app.use(cors({
@@ -22,11 +24,13 @@ app.use(cors({
 //database conection
 const connection = createConnection();
 
+app.use(express.static("./public"))
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 app.use(logger('dev'));
 app.use(express.json());
+app.use(fileUpload());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
@@ -34,6 +38,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/users', usersRouter);
 app.use('/items', itemsRouter);
 app.use('/currencies', currenciesRouter);
+app.use('/users', authenticatedUsersRouter);
 app.use('/transactions', transactionsRouter);
 
 app.use('/', authenticateUser);

@@ -28,7 +28,13 @@ module.exports = new EntitySchema({
         seller: {
             type: 'many-to-one',
             target: 'User',
-            joinColumn: true,
+            joinColumn: true,     
+            inverseSide: 'transactions'       
+        },
+        currency: {
+            type: 'many-to-one',
+            target: 'Currency',
+            joinColumn: true,                 
         },
         buyer: {
             type: 'many-to-one',

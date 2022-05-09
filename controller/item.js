@@ -10,12 +10,13 @@ const formatDateTime = (date, format = 'YYYY-MM-DD h:mm:ss') =>
     date ? moment(date).format(format) : date;
 
 const getItem = async (req, res, next) => {
-    const {id} = req.params;
+    const { id } = req.params;
     const users = await AppDataSource
         .getRepository(Item)
         .createQueryBuilder("items")
         .where("items.id = :id", { id: id })
-        .leftJoinAndSelect("items.creator", "users.id")
+        .leftJoinAndSelect("items.owner", "owner")        
+        .leftJoinAndSelect("items.creator", "creator")        
         .leftJoinAndSelect("items.currency", "currencies.id")
         .getOne()
         .then(async (item) => {
@@ -24,7 +25,7 @@ const getItem = async (req, res, next) => {
         })
         .catch((error) => {
             return res.status(404).json({ code: RES_ERROR_DATABASE, msg: "User Cannot be Found!" });
-        });;
+        });
     console.log(users);
 }
 
@@ -35,6 +36,7 @@ const getAllItem = async (req, res, next) => {
         .leftJoinAndSelect("items.creator", "users.id")
         .leftJoinAndSelect("items.currency", "currencies.id")
         .orderBy("items.created_at", "DESC")
+        .take(20)
         .getMany()
         .then(async (item) => {
             res.json(item);
@@ -47,12 +49,14 @@ const getAllItem = async (req, res, next) => {
 }
 
 const getUserItem = async (req, res, next) => {
-    const {id} = req.params;
+    const { id } = req.params;
+    const { keyword, category } = req.query;
+    //console.log(req.query);
     const users = await AppDataSource
         .getRepository(Item)
-        .createQueryBuilder("items")        
+        .createQueryBuilder("items")
         .leftJoinAndSelect("items.currency", "currencies.id")
-        .where("items.creator = :id", { id: id })           
+        .where("items.creator = :id", { id: id })
         .getMany()
         .then(async (item) => {
             res.json(item);
@@ -66,19 +70,25 @@ const getUserItem = async (req, res, next) => {
 
 const createItem = async (req, res, next) => {
 
-    // const { collection, nft_id, price, creator, currency, owner } = req.body;
+    //fake req.param
+
+    const { nft_id, creator, price, collection, currency, owner, name, desc, img_url } = req.body;
+
     // //2022-05-11 17:39:38
-    // const formatDateTime = (date, format = 'YYYY-MM-DD h:mm:ss') =>
-    //   date ? moment(date).format(format) : date;  
+    const formatDateTime = (date, format = 'YYYY-MM-DD hh:mm:ss') =>
+        date ? moment(date).format(format) : date;    
     const item = {
-        collection: "0xdfsdlflerferferflerfl",
-        nft_id: 2,
-        price: 1030,
-        creator: 59,
-        currency: 1,
-        owner: 59,
-        updated_at: '2022-05-11 17:39:38',
-        created_at: '2022-05-11 17:39:38',
+        name: name,
+        desc: desc,
+        collection: collection,
+        nft_id: nft_id,
+        price: price,
+        img_url: img_url,
+        creator: creator,   
+        currency: currency,
+        owner: owner,
+        updated_at: formatDateTime(new Date),
+        created_at: formatDateTime(new Date),
         status: 0
     }
     await AppDataSource
@@ -101,7 +111,7 @@ const createItem = async (req, res, next) => {
 }
 
 const updateItem = async (req, res, next) => {
-    const {id} = req.params;
+    const { id } = req.params;
     await AppDataSource
         .createQueryBuilder()
         .update(Item)
@@ -118,11 +128,11 @@ const updateItem = async (req, res, next) => {
 }
 
 const deleteItem = async (req, res, next) => {
-    const {id} = req.params;
+    const { id } = req.params;
     await AppDataSource
         .createQueryBuilder()
         .delete()
-        .from(Item)      
+        .from(Item)
         .where("id = :id", { id: id })
         .execute()
         .then(response => {

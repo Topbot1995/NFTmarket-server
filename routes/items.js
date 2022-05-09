@@ -3,7 +3,7 @@ const {getItem, getUserItem, createItem, updateItem, deleteItem, getAllItem } = 
 const router = express.Router();
 
 /* GET home page. */
-router.get('/create', createItem);
+router.post('/create', createItem);
 router.get('/update/:id', updateItem);
 router.get('/delete/:id', deleteItem);
 router.get('/all', getAllItem);

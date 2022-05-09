@@ -6,7 +6,7 @@ const { RES_SUCCESS_CODE, RES_ERROR_DATABASE } = require('../constants');
 const moment = require('moment');
 require('dotenv').config();
 
-const formatDateTime = (date, format = 'YYYY-MM-DD h:mm:ss') =>
+const formatDateTime = (date, format = 'YYYY-MM-DD hh:mm:ss') =>
     date ? moment(date).format(format) : date;
 const getTranc = async (req, res, next) => {
     const { id } = req.params;
@@ -66,17 +66,20 @@ const getItemTranc = async (req, res, next) => {
 
 
 const createTranc = async (req, res, next) => {
-
-    // const { collection, nft_id, price, creator, currency, owner } = req.body;
+    // dev-faker: req.params
+    const { item, seller, buyer, currency, sold_price } = req.query;
+    console.log(req.query);
     // //2022-05-11 17:39:38
     // const formatDateTime = (date, format = 'YYYY-MM-DD h:mm:ss') =>
     //   date ? moment(date).format(format) : date;  
     const transaction = {
-        item: 6,
-        seller: 59,
-        buyer: 59,
-        sold_price: 1,
-        created_at:"2022-05-11 17:39:38"
+        item,
+        seller,
+        buyer,
+        currency,
+        sold_price,
+        updated_at: formatDateTime(new Date),
+        created_at: formatDateTime(new Date),
     }
     await AppDataSource
         .createQueryBuilder()

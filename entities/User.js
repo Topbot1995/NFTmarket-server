@@ -11,35 +11,51 @@ module.exports = new EntitySchema({
         },
         email: {
             type: "varchar",
-            nullable:false
+            nullable: false
         },
         fullname: {
             type: "varchar",
-            nullable:false
+            nullable: false
         },
         nickname: {
             type: "varchar",
-            nullable:false
+            nullable: false
         },
         password: {
             type: "varchar",
-            nullable:false
+            nullable: false
+        },
+        img_url: {
+            type: "varchar",
+            nullable: false
         },
         wallet_addr: {
             type: "varchar",
-            nullable:false
+            nullable: false
         },
         refresh_token: {
-            type: "varchar",            
+            type: "varchar",
         },
         updated_at: {
             type: "datetime",
         },
         created_at: {
-            type: "datetime",            
+            type: "datetime",
         },
         status: {
             type: "tinyint"
-        }
-    }
+        },
+    },
+    relations: {        
+        items: {
+            type: 'one-to-many',
+            target: 'Item',
+            inverseSide: 'owner' // Note that this is relation name, not the entity name
+        },
+        transactions: {
+            type: 'one-to-many',
+            target: 'Transaction',            
+            inverseSide: 'seller' // Note that this is relation name, not the entity name
+        },
+    },
 });

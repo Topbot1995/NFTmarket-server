@@ -12,6 +12,10 @@ module.exports = new EntitySchema({
         address: {
             type: "varchar",
             nullable:false
+        },   
+        swapRate: {
+            type: "int",
+            nullable:false
         },      
         symbol: {
             type: "varchar",

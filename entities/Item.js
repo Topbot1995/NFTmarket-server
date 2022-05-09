@@ -10,7 +10,19 @@ module.exports = new EntitySchema({
             type: "int",
             generated: true
         },
-        collecton: {
+        name: {
+            type: "varchar",
+            nullable: false
+        },
+        desc: {
+            type: "varchar",
+            nullable: false
+        },
+        img_url: {
+            type: "varchar",
+            nullable: false
+        },
+        collection: {
             type: "varchar",
             nullable: false
         },
